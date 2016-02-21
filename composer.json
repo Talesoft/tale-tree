@@ -1,10 +1,10 @@
 {
-    "name": "talesoft/tale-dom",
+    "name": "talesoft/tale-tree",
     "type": "library",
-    "keywords": ["xml", "html", "xhtml", "svg", "markup", "parse", "write"],
-    "description": "XML and HTML manipulation",
+    "keywords": [""],
+    "description": "Flexible and extensible tree-representation (parent->children[])",
     "license": "MIT",
-    "homepage": "http://dom.tale.talesoft.io",
+    "homepage": "http://tree.tale.talesoft.io",
     "authors": [
         {
             "name": "Talesoft",
