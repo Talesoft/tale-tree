@@ -9,6 +9,9 @@ namespace Tale\Tree;
 interface LeafInterface
 {
 
+    /**
+     * @return NodeInterface
+     */
     public function hasParent();
 
     /**
@@ -17,22 +20,57 @@ interface LeafInterface
     public function getParent();
 
     /**
-     * @param \Tale\Tree\NodeInterface $parent
+     * @param NodeInterface $parent
      *
      * @return $this
      */
     public function setParent(NodeInterface $parent);
 
+    /**
+     * @return int|false
+     */
     public function getIndex();
 
+    /**
+     * @return NodeInterface
+     */
     public function getPreviousSibling();
+
+    /**
+     * @return NodeInterface
+     */
     public function getNextSibling();
 
+    /**
+     * @param LeafInterface $child
+     *
+     * @return static
+     */
     public function append(LeafInterface $child);
+
+    /**
+     * @param LeafInterface $child
+     *
+     * @return static
+     */
     public function prepend(LeafInterface $child);
 
+    /**
+     * @return static
+     */
     public function remove();
 
+    /**
+     * @param callable $callback
+     *
+     * @return bool
+     */
     public function is($callback);
+
+    /**
+     * @param $className
+     *
+     * @return bool
+     */
     public function isInstanceOf($className);
 }

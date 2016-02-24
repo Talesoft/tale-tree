@@ -2,8 +2,12 @@
 
 namespace Tale\Tree;
 
-use Exception;
+use Traversable;
 
+/**
+ * Class Node
+ * @package Tale\Tree
+ */
 class Node extends Leaf implements NodeInterface
 {
 
@@ -12,6 +16,12 @@ class Node extends Leaf implements NodeInterface
      */
     private $_children;
 
+    /**
+     * Node constructor.
+     *
+     * @param NodeInterface $parent
+     * @param array $children
+     */
     public function __construct(NodeInterface $parent = null, array $children = null)
     {
         parent::__construct($parent);
@@ -22,18 +32,42 @@ class Node extends Leaf implements NodeInterface
             $this->setChildren($children);
     }
 
+    /**
+     *
+     */
+    public function __clone()
+    {
+        parent::__clone();
+
+        foreach ($this->_children as $child)
+            //clone $child will remove the parent and this clear the children
+            //We re-append them directly
+            $this->appendChild(clone $child);
+    }
+
+    /**
+     * @return bool
+     */
     public function hasChildren()
     {
 
         return !empty($this->_children);
     }
 
+    /**
+     * @return int
+     */
     public function getChildCount()
     {
 
         return count($this->_children);
     }
 
+    /**
+     * @param LeafInterface $child
+     *
+     * @return LeafInterface[]
+     */
     public function getChildIndex(LeafInterface $child)
     {
 
@@ -49,6 +83,11 @@ class Node extends Leaf implements NodeInterface
         return $this->_children;
     }
 
+    /**
+     * @param array $children
+     *
+     * @return static
+     */
     public function setChildren(array $children)
     {
 
@@ -59,6 +98,9 @@ class Node extends Leaf implements NodeInterface
         return $this;
     }
 
+    /**
+     * @return static
+     */
     public function removeChildren()
     {
 
@@ -68,18 +110,59 @@ class Node extends Leaf implements NodeInterface
         return $this;
     }
 
+    /**
+     * @param LeafInterface $child
+     *
+     * @return bool
+     */
     public function hasChild(LeafInterface $child)
     {
 
         return in_array($child, $this->_children, true);
     }
 
+    /**
+     * @param $index
+     *
+     * @return bool
+     */
+    public function hasChildAt($index)
+    {
+
+        return isset($this->_children[$index]);
+    }
+
+    /**
+     * @param $index
+     *
+     * @return LeafInterface
+     */
     public function getChildAt($index)
     {
 
         return $this->_children[$index];
     }
 
+    /**
+     * @param $index
+     *
+     * @return static
+     * @throws Exception
+     */
+    public function removeChildAt($index)
+    {
+
+        if (!$this->hasChildAt($index))
+            throw new Exception(
+                "Failed to remove child: No child found at $index"
+            );
+
+        return $this->removeChild($this->getChildAt($index));
+    }
+
+    /**
+     * @param LeafInterface $child
+     */
     private function _prepareChild(LeafInterface $child)
     {
 
@@ -87,6 +170,9 @@ class Node extends Leaf implements NodeInterface
             $this->removeChild($child);
     }
 
+    /**
+     * @param LeafInterface $child
+     */
     private function _finishChild(LeafInterface $child)
     {
 
@@ -94,6 +180,11 @@ class Node extends Leaf implements NodeInterface
             $child->setParent($this);
     }
 
+    /**
+     * @param LeafInterface $child
+     *
+     * @return static
+     */
     public function appendChild(LeafInterface $child)
     {
 
@@ -104,6 +195,11 @@ class Node extends Leaf implements NodeInterface
         return $this;
     }
 
+    /**
+     * @param LeafInterface $child
+     *
+     * @return static
+     */
     public function prependChild(LeafInterface $child)
     {
 
@@ -114,6 +210,11 @@ class Node extends Leaf implements NodeInterface
         return $this;
     }
 
+    /**
+     * @param LeafInterface $child
+     *
+     * @return static
+     */
     public function removeChild(LeafInterface $child)
     {
 
@@ -128,6 +229,13 @@ class Node extends Leaf implements NodeInterface
         return $this;
     }
 
+    /**
+     * @param LeafInterface $child
+     * @param LeafInterface $newChild
+     *
+     * @return static
+     * @throws \Exception
+     */
     public function insertBefore(LeafInterface $child, LeafInterface $newChild)
     {
 
@@ -143,6 +251,13 @@ class Node extends Leaf implements NodeInterface
         return $this;
     }
 
+    /**
+     * @param LeafInterface $child
+     * @param LeafInterface $newChild
+     *
+     * @return static
+     * @throws \Exception
+     */
     public function insertAfter(LeafInterface $child, LeafInterface $newChild)
     {
 
@@ -158,12 +273,19 @@ class Node extends Leaf implements NodeInterface
         return $this;
     }
 
+    /**
+     * @param callable $callback
+     * @param int $depth
+     * @param int $level
+     *
+     * @return \Generator
+     */
     public function findChildren($callback, $depth = null, $level = null)
     {
 
         $level = $level ?: 0;
 
-        foreach ($this->getChildren() as $child) {
+        foreach ($this->_children as $child) {
 
             /** @var NodeInterface $child */
             if ($child->is($callback))
@@ -178,6 +300,25 @@ class Node extends Leaf implements NodeInterface
         }
     }
 
+    /**
+     * @param callable $callback
+     * @param int $depth
+     * @param int $level
+     *
+     * @return LeafInterface[]
+     */
+    public function findChildrenArray($callback, $depth = null, $level = null)
+    {
+
+        return iterator_to_array($this->findChildren($callback, $depth, $level));
+    }
+
+    /**
+     * @param callable $callback
+     * @param int $depth
+     *
+     * @return \Generator
+     */
     public function find($callback, $depth = null)
     {
 
@@ -188,31 +329,90 @@ class Node extends Leaf implements NodeInterface
             yield $child;
     }
 
+    /**
+     * @param callable $callback
+     * @param int $depth
+     *
+     * @return LeafInterface[]
+     */
     public function findArray($callback, $depth = null)
     {
 
         return iterator_to_array($this->find($callback, $depth));
     }
 
+    /**
+     * @return Traversable
+     */
     public function getIterator()
     {
 
         return new \ArrayIterator($this->_children);
     }
 
+    /**
+     * @return int
+     */
     public function count()
     {
 
-        return count($this->_children);
+        return $this->getChildCount();
     }
 
-    public function __clone()
+    /**
+     * @param int $offset
+     *
+     * @return bool
+     */
+    public function offsetExists($offset)
     {
-        parent::__clone();
 
-        foreach ($this->_children as $child)
-            //clone $child will remove the parent and this clear the children
-            //We re-append them directly
-            $this->appendChild(clone $child);
+        return $this->hasChildAt($offset);
+    }
+
+    /**
+     * @param int $offset
+     *
+     * @return LeafInterface
+     */
+    public function offsetGet($offset)
+    {
+
+        return $this->getChildAt($offset);
+    }
+
+    /**
+     * @param int $offset
+     * @param LeafInterface $value
+     */
+    public function offsetSet($offset, $value)
+    {
+
+        if (!($value instanceof LeafInterface))
+            throw new \InvalidArgumentException(
+                "Argument 2 passed to Node->offsetSet needs to be instance ".
+                "of ".LeafInterface::class
+            );
+
+        if ($offset >= count($this)) {
+
+            $this->appendChild($value);
+            return;
+        }
+
+        $old = $this->getChildAt($offset);
+        $old->append($value);
+        $old->remove();
+    }
+
+    /**
+     * @param int $offset
+     *
+     * @throws Exception
+     */
+    public function offsetUnset($offset)
+    {
+
+        $this->removeChildAt($offset);
     }
 }

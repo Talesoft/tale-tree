@@ -2,6 +2,11 @@
 
 namespace Tale\Tree;
 
+/**
+ * Class Leaf
+ *
+ * @package Tale\Tree
+ */
 class Leaf implements LeafInterface
 {
 
@@ -10,6 +15,11 @@ class Leaf implements LeafInterface
      */
     private $_parent;
 
+    /**
+     * Leaf constructor.
+     *
+     * @param NodeInterface $parent
+     */
     public function __construct(NodeInterface $parent = null)
     {
 
@@ -19,31 +29,45 @@ class Leaf implements LeafInterface
             $this->setParent($parent);
     }
 
+    /**
+     *
+     */
     public function __clone()
     {
 
         $this->_parent = null;
     }
 
+    /**
+     * @return bool
+     */
     public function hasParent()
     {
 
         return $this->_parent !== null;
     }
 
+    /**
+     * @return NodeInterface
+     */
     public function getParent()
     {
 
         return $this->_parent;
     }
 
+    /**
+     * @param NodeInterface $parent
+     *
+     * @return $this
+     */
     public function setParent(NodeInterface $parent = null)
     {
 
         if ($this->_parent === $parent)
             return $this;
 
-        if (is_null($parent) && $this->_parent && $this->_parent->hasChild($this)) {
+        if ($parent !== null && $this->_parent && $this->_parent->hasChild($this)) {
 
             $this->_parent->removeChild($this);
             return $this;
@@ -57,6 +81,9 @@ class Leaf implements LeafInterface
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getIndex()
     {
 
@@ -66,6 +93,9 @@ class Leaf implements LeafInterface
         return $this->_parent->getChildIndex($this);
     }
 
+    /**
+     * @return LeafInterface
+     */
     public function getPreviousSibling()
     {
 
@@ -76,6 +106,9 @@ class Leaf implements LeafInterface
         return $this->_parent->getChildAt($idx - 1);
     }
 
+    /**
+     * @return LeafInterface
+     */
     public function getNextSibling()
     {
 
@@ -86,6 +119,11 @@ class Leaf implements LeafInterface
         return $this->getParent()->getChildAt($idx + 1);
     }
 
+    /**
+     * @param LeafInterface $child
+     *
+     * @return static
+     */
     public function append(LeafInterface $child)
     {
 
@@ -93,6 +131,11 @@ class Leaf implements LeafInterface
         return $this;
     }
 
+    /**
+     * @param LeafInterface $child
+     *
+     * @return static
+     */
     public function prepend(LeafInterface $child)
     {
 
@@ -101,6 +144,9 @@ class Leaf implements LeafInterface
         return $this;
     }
 
+    /**
+     * @return static
+     */
     public function remove()
     {
 
@@ -109,6 +155,11 @@ class Leaf implements LeafInterface
         return $this;
     }
 
+    /**
+     * @param callable $callback
+     *
+     * @return bool
+     */
     public function is($callback)
     {
 
@@ -117,9 +168,14 @@ class Leaf implements LeafInterface
                 "Argument 1 passed to Leaf->is is not a valid callback"
             );
 
-        return call_user_func($callback, $this);
+        return call_user_func($callback, $this) === true;
     }
 
+    /**
+     * @param $className
+     *
+     * @return bool
+     */
     public function isInstanceOf($className)
     {
 
