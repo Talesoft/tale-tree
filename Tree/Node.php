@@ -2,6 +2,7 @@
 
 namespace Tale\Tree;
 
+use Tale\TreeException;
 use Traversable;
 
 /**
@@ -147,13 +148,13 @@ class Node extends Leaf implements NodeInterface
      * @param $index
      *
      * @return $this
-     * @throws Exception
+     * @throws TreeException
      */
     public function removeChildAt($index)
     {
 
         if (!$this->hasChildAt($index))
-            throw new Exception(
+            throw new TreeException(
                 "Failed to remove child: No child found at $index"
             );
 
@@ -234,13 +235,13 @@ class Node extends Leaf implements NodeInterface
      * @param LeafInterface $newChild
      *
      * @return $this
-     * @throws \Exception
+     * @throws TreeException
      */
     public function insertBefore(LeafInterface $child, LeafInterface $newChild)
     {
 
         if (!$this->hasChild($child))
-            throw new Exception(
+            throw new TreeException(
                 "Failed to insert before: Passed child is not a child of element to insert in"
             );
 
@@ -256,13 +257,13 @@ class Node extends Leaf implements NodeInterface
      * @param LeafInterface $newChild
      *
      * @return $this
-     * @throws \Exception
+     * @throws TreeException
      */
     public function insertAfter(LeafInterface $child, LeafInterface $newChild)
     {
 
         if (!$this->hasChild($child))
-            throw new Exception(
+            throw new TreeException(
                 "Failed to insert after: Passed child is not a child of element to insert in"
             );
 
@@ -408,7 +409,7 @@ class Node extends Leaf implements NodeInterface
     /**
      * @param int $offset
      *
-     * @throws Exception
+     * @throws TreeException
      */
     public function offsetUnset($offset)
     {
