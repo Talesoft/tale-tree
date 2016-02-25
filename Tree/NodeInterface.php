@@ -39,7 +39,7 @@ interface NodeInterface extends LeafInterface, \IteratorAggregate, \Countable, \
     public function setChildren(array $children);
 
     /**
-     * @return static
+     * @return $this
      */
     public function removeChildren();
 
@@ -67,46 +67,46 @@ interface NodeInterface extends LeafInterface, \IteratorAggregate, \Countable, \
     /**
      * @param $index
      *
-     * @return static
+     * @return $this
      */
     public function removeChildAt($index);
 
     /**
      * @param LeafInterface $child
      *
-     * @return static
+     * @return $this
      */
     public function appendChild(LeafInterface $child);
 
     /**
      * @param LeafInterface $child
      *
-     * @return static
+     * @return $this
      */
     public function prependChild(LeafInterface $child);
 
     /**
      * @param LeafInterface $child
      *
-     * @return static
+     * @return $this
      */
     public function removeChild(LeafInterface $child);
 
     /**
      * @param LeafInterface $child
-     * @param LeafInterface $child
+     * @param LeafInterface $newChild
      *
-     * @return static
+     * @return $this
      */
-    public function insertBefore(LeafInterface $child, LeafInterface $child);
+    public function insertBefore(LeafInterface $child, LeafInterface $newChild);
 
     /**
      * @param LeafInterface $child
-     * @param LeafInterface $child
+     * @param LeafInterface $newChild
      *
-     * @return static
+     * @return $this
      */
-    public function insertAfter(LeafInterface $child, LeafInterface $child);
+    public function insertAfter(LeafInterface $child, LeafInterface $newChild);
 
     /**
      * @param callable $callback

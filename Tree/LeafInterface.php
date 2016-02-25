@@ -44,19 +44,19 @@ interface LeafInterface
     /**
      * @param LeafInterface $child
      *
-     * @return static
+     * @return $this
      */
     public function append(LeafInterface $child);
 
     /**
      * @param LeafInterface $child
      *
-     * @return static
+     * @return $this
      */
     public function prepend(LeafInterface $child);
 
     /**
-     * @return static
+     * @return $this
      */
     public function remove();
 

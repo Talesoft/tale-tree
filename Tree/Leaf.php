@@ -122,7 +122,7 @@ class Leaf implements LeafInterface
     /**
      * @param LeafInterface $child
      *
-     * @return static
+     * @return $this
      */
     public function append(LeafInterface $child)
     {
@@ -134,7 +134,7 @@ class Leaf implements LeafInterface
     /**
      * @param LeafInterface $child
      *
-     * @return static
+     * @return $this
      */
     public function prepend(LeafInterface $child)
     {
@@ -145,7 +145,7 @@ class Leaf implements LeafInterface
     }
 
     /**
-     * @return static
+     * @return $this
      */
     public function remove()
     {

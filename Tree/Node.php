@@ -86,7 +86,7 @@ class Node extends Leaf implements NodeInterface
     /**
      * @param array $children
      *
-     * @return static
+     * @return $this
      */
     public function setChildren(array $children)
     {
@@ -99,7 +99,7 @@ class Node extends Leaf implements NodeInterface
     }
 
     /**
-     * @return static
+     * @return $this
      */
     public function removeChildren()
     {
@@ -146,7 +146,7 @@ class Node extends Leaf implements NodeInterface
     /**
      * @param $index
      *
-     * @return static
+     * @return $this
      * @throws Exception
      */
     public function removeChildAt($index)
@@ -183,7 +183,7 @@ class Node extends Leaf implements NodeInterface
     /**
      * @param LeafInterface $child
      *
-     * @return static
+     * @return $this
      */
     public function appendChild(LeafInterface $child)
     {
@@ -198,7 +198,7 @@ class Node extends Leaf implements NodeInterface
     /**
      * @param LeafInterface $child
      *
-     * @return static
+     * @return $this
      */
     public function prependChild(LeafInterface $child)
     {
@@ -213,7 +213,7 @@ class Node extends Leaf implements NodeInterface
     /**
      * @param LeafInterface $child
      *
-     * @return static
+     * @return $this
      */
     public function removeChild(LeafInterface $child)
     {
@@ -233,7 +233,7 @@ class Node extends Leaf implements NodeInterface
      * @param LeafInterface $child
      * @param LeafInterface $newChild
      *
-     * @return static
+     * @return $this
      * @throws \Exception
      */
     public function insertBefore(LeafInterface $child, LeafInterface $newChild)
@@ -255,7 +255,7 @@ class Node extends Leaf implements NodeInterface
      * @param LeafInterface $child
      * @param LeafInterface $newChild
      *
-     * @return static
+     * @return $this
      * @throws \Exception
      */
     public function insertAfter(LeafInterface $child, LeafInterface $newChild)
