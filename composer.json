@@ -1,7 +1,7 @@
 {
     "name": "talesoft/tale-tree",
     "type": "library",
-    "keywords": [""],
+    "keywords": ["tree", "node", "leaf"],
     "description": "Flexible and extensible tree-representation (parent->children[])",
     "license": "MIT",
     "homepage": "http://tree.tale.talesoft.io",
