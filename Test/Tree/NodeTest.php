@@ -1,6 +1,6 @@
 <?php
 
-namespace Tale\Test;
+namespace Tale\Test\Tree;
 
 use Tale\Tree\LeafInterface;
 use Tale\Tree\Node;

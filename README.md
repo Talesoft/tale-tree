@@ -1,8 +1,8 @@
 
-# Tale Dom
+# Tale Tree
 **A Tale Framework Component**
 
-# What is Tale Dom?
+# What is Tale Tree?
 
 
 
@@ -11,7 +11,7 @@
 Install via Composer
 
 ```bash
-composer require "talesoft/tale-dom:*"
+composer require "talesoft/tale-tree:*"
 composer install
 ```
 
