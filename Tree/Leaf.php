@@ -127,7 +127,7 @@ class Leaf implements LeafInterface
     public function append(LeafInterface $child)
     {
 
-        $this->getParent()->insertBefore($this, $child);
+        $this->getParent()->insertAfter($this, $child);
         return $this;
     }
 
@@ -139,7 +139,7 @@ class Leaf implements LeafInterface
     public function prepend(LeafInterface $child)
     {
 
-        $this->getParent()->insertAfter($this, $child);
+        $this->getParent()->insertBefore($this, $child);
 
         return $this;
     }
