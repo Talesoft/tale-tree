@@ -13,7 +13,7 @@ class Leaf implements LeafInterface
     /**
      * @var NodeInterface
      */
-    private $_parent;
+    private $parent;
 
     /**
      * Leaf constructor.
@@ -23,7 +23,7 @@ class Leaf implements LeafInterface
     public function __construct(NodeInterface $parent = null)
     {
 
-        $this->_parent = null;
+        $this->parent = null;
 
         if ($parent !== null)
             $this->setParent($parent);
@@ -35,7 +35,7 @@ class Leaf implements LeafInterface
     public function __clone()
     {
 
-        $this->_parent = null;
+        $this->parent = null;
     }
 
     /**
@@ -44,7 +44,7 @@ class Leaf implements LeafInterface
     public function hasParent()
     {
 
-        return $this->_parent !== null;
+        return $this->parent !== null;
     }
 
     /**
@@ -53,7 +53,7 @@ class Leaf implements LeafInterface
     public function getParent()
     {
 
-        return $this->_parent;
+        return $this->parent;
     }
 
     /**
@@ -64,16 +64,16 @@ class Leaf implements LeafInterface
     public function setParent(NodeInterface $parent = null)
     {
 
-        if ($this->_parent === $parent)
+        if ($this->parent === $parent)
             return $this;
 
-        if ($parent !== null && $this->_parent && $this->_parent->hasChild($this)) {
+        if ($parent !== null && $this->parent && $this->parent->hasChild($this)) {
 
-            $this->_parent->removeChild($this);
+            $this->parent->removeChild($this);
             return $this;
         }
 
-        $this->_parent = $parent;
+        $this->parent = $parent;
 
         if ($parent !== null && !$parent->hasChild($this))
             $parent->appendChild($this);
@@ -87,10 +87,10 @@ class Leaf implements LeafInterface
     public function getIndex()
     {
 
-        if ($this->_parent === null)
+        if ($this->parent === null)
             return null;
 
-        return $this->_parent->getChildIndex($this);
+        return $this->parent->getChildIndex($this);
     }
 
     /**
@@ -103,7 +103,7 @@ class Leaf implements LeafInterface
         if (!$idx) //Includes "not found" and "0", which means this is the first sibling
             return null;
 
-        return $this->_parent->getChildAt($idx - 1);
+        return $this->parent->getChildAt($idx - 1);
     }
 
     /**
@@ -116,7 +116,7 @@ class Leaf implements LeafInterface
         if ($idx === null || $idx >= count($this->getParent()) - 1)
             return null;
 
-        return $this->getParent()->getChildAt($idx + 1);
+        return $this->parent->getChildAt($idx + 1);
     }
 
     /**
@@ -127,7 +127,7 @@ class Leaf implements LeafInterface
     public function append(LeafInterface $child)
     {
 
-        $this->getParent()->insertAfter($this, $child);
+        $this->parent->insertAfter($this, $child);
         return $this;
     }
 
@@ -139,7 +139,7 @@ class Leaf implements LeafInterface
     public function prepend(LeafInterface $child)
     {
 
-        $this->getParent()->insertBefore($this, $child);
+        $this->parent->insertBefore($this, $child);
 
         return $this;
     }
@@ -150,7 +150,7 @@ class Leaf implements LeafInterface
     public function remove()
     {
 
-        $this->getParent()->removeChild($this);
+        $this->parent->removeChild($this);
 
         return $this;
     }

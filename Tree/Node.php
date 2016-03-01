@@ -15,7 +15,7 @@ class Node extends Leaf implements NodeInterface
     /**
      * @var LeafInterface[]
      */
-    private $_children;
+    private $children;
 
     /**
      * Node constructor.
@@ -27,7 +27,7 @@ class Node extends Leaf implements NodeInterface
     {
         parent::__construct($parent);
 
-        $this->_children = [];
+        $this->children = [];
 
         if (!is_null($children))
             $this->setChildren($children);
@@ -40,7 +40,7 @@ class Node extends Leaf implements NodeInterface
     {
         parent::__clone();
 
-        foreach ($this->_children as $child)
+        foreach ($this->children as $child)
             //clone $child will remove the parent and this clear the children
             //We re-append them directly
             $this->appendChild(clone $child);
@@ -52,7 +52,7 @@ class Node extends Leaf implements NodeInterface
     public function hasChildren()
     {
 
-        return !empty($this->_children);
+        return !empty($this->children);
     }
 
     /**
@@ -61,7 +61,7 @@ class Node extends Leaf implements NodeInterface
     public function getChildCount()
     {
 
-        return count($this->_children);
+        return count($this->children);
     }
 
     /**
@@ -72,7 +72,7 @@ class Node extends Leaf implements NodeInterface
     public function getChildIndex(LeafInterface $child)
     {
 
-        return array_search($child, $this->_children, true);
+        return array_search($child, $this->children, true);
     }
 
     /**
@@ -81,7 +81,7 @@ class Node extends Leaf implements NodeInterface
     public function getChildren()
     {
 
-        return $this->_children;
+        return $this->children;
     }
 
     /**
@@ -105,7 +105,7 @@ class Node extends Leaf implements NodeInterface
     public function removeChildren()
     {
 
-        foreach ($this->_children as $child)
+        foreach ($this->children as $child)
             $child->setParent(null);
 
         return $this;
@@ -119,7 +119,7 @@ class Node extends Leaf implements NodeInterface
     public function hasChild(LeafInterface $child)
     {
 
-        return in_array($child, $this->_children, true);
+        return in_array($child, $this->children, true);
     }
 
     /**
@@ -130,7 +130,7 @@ class Node extends Leaf implements NodeInterface
     public function hasChildAt($index)
     {
 
-        return isset($this->_children[$index]);
+        return isset($this->children[$index]);
     }
 
     /**
@@ -141,7 +141,7 @@ class Node extends Leaf implements NodeInterface
     public function getChildAt($index)
     {
 
-        return $this->_children[$index];
+        return $this->children[$index];
     }
 
     /**
@@ -190,7 +190,7 @@ class Node extends Leaf implements NodeInterface
     {
 
         $this->_prepareChild($child);
-        $this->_children[] = $child;
+        $this->children[] = $child;
         $this->_finishChild($child);
 
         return $this;
@@ -205,7 +205,7 @@ class Node extends Leaf implements NodeInterface
     {
 
         $this->_prepareChild($child);
-        array_unshift($this->_children, $child);
+        array_unshift($this->children, $child);
         $this->_finishChild($child);
 
         return $this;
@@ -219,11 +219,11 @@ class Node extends Leaf implements NodeInterface
     public function removeChild(LeafInterface $child)
     {
 
-        $idx = array_search($child, $this->_children, true);
+        $idx = array_search($child, $this->children, true);
 
         if ($idx !== false) {
 
-            unset($this->_children[$idx]);
+            unset($this->children[$idx]);
             $child->setParent(null);
         }
 
@@ -246,7 +246,7 @@ class Node extends Leaf implements NodeInterface
             );
 
         $this->_prepareChild($newChild);
-        array_splice($this->_children, $child->getIndex(), 0, [$newChild]);
+        array_splice($this->children, $child->getIndex(), 0, [$newChild]);
         $this->_finishChild($newChild);
 
         return $this;
@@ -268,7 +268,7 @@ class Node extends Leaf implements NodeInterface
             );
 
         $this->_prepareChild($newChild);
-        array_splice($this->_children, $child->getIndex() + 1, 0, [$newChild]);
+        array_splice($this->children, $child->getIndex() + 1, 0, [$newChild]);
         $this->_finishChild($newChild);
 
         return $this;
@@ -286,7 +286,7 @@ class Node extends Leaf implements NodeInterface
 
         $level = $level ?: 0;
 
-        foreach ($this->_children as $child) {
+        foreach ($this->children as $child) {
 
             /** @var NodeInterface $child */
             if ($child->is($callback))
@@ -348,7 +348,7 @@ class Node extends Leaf implements NodeInterface
     public function getIterator()
     {
 
-        return new \ArrayIterator($this->_children);
+        return new \ArrayIterator($this->children);
     }
 
     /**
