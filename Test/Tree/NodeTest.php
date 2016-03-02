@@ -33,6 +33,41 @@ class NodeTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(D::class, $node->getChildAt(3));
     }
 
+    public function testRemovalResetsOffsetsCorrectly()
+    {
+
+        $node = new Node();
+
+        $node->appendChild($a = new A());
+        $b = new B($node);
+        $node->prependChild($c = new C());
+        $node->appendChild($d = new D());
+
+        $a->remove();
+
+        $this->assertSame([$c, $b, $d], $node->getChildren());
+    }
+
+    public function testSiblings()
+    {
+
+        $node = new Node();
+
+        $node->appendChild($a = new A());
+        $b = new B($node);
+        $node->prependChild($c = new C());
+        $node->appendChild($d = new D());
+
+        $a->remove();
+
+        $this->assertSame(null, $c->getPreviousSibling());
+        $this->assertSame($b, $c->getNextSibling());
+        $this->assertSame(null, $d->getNextSibling());
+        $this->assertSame($b, $d->getPreviousSibling());
+        $this->assertSame($c, $b->getPreviousSibling());
+        $this->assertSame($d, $b->getNextSibling());
+    }
+
     public function testFindChildren()
     {
 

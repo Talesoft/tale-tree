@@ -164,7 +164,7 @@ class Node extends Leaf implements NodeInterface
     /**
      * @param LeafInterface $child
      */
-    private function _prepareChild(LeafInterface $child)
+    private function prepareChild(LeafInterface $child)
     {
 
         if ($this->hasChild($child))
@@ -174,7 +174,7 @@ class Node extends Leaf implements NodeInterface
     /**
      * @param LeafInterface $child
      */
-    private function _finishChild(LeafInterface $child)
+    private function finishChild(LeafInterface $child)
     {
 
         if ($child->getParent() !== $this)
@@ -189,9 +189,9 @@ class Node extends Leaf implements NodeInterface
     public function appendChild(LeafInterface $child)
     {
 
-        $this->_prepareChild($child);
+        $this->prepareChild($child);
         $this->children[] = $child;
-        $this->_finishChild($child);
+        $this->finishChild($child);
 
         return $this;
     }
@@ -204,9 +204,9 @@ class Node extends Leaf implements NodeInterface
     public function prependChild(LeafInterface $child)
     {
 
-        $this->_prepareChild($child);
+        $this->prepareChild($child);
         array_unshift($this->children, $child);
-        $this->_finishChild($child);
+        $this->finishChild($child);
 
         return $this;
     }
@@ -223,7 +223,7 @@ class Node extends Leaf implements NodeInterface
 
         if ($idx !== false) {
 
-            unset($this->children[$idx]);
+            array_splice($this->children, $idx, 1);
             $child->setParent(null);
         }
 
@@ -245,9 +245,9 @@ class Node extends Leaf implements NodeInterface
                 "Failed to insert before: Passed child is not a child of element to insert in"
             );
 
-        $this->_prepareChild($newChild);
+        $this->prepareChild($newChild);
         array_splice($this->children, $child->getIndex(), 0, [$newChild]);
-        $this->_finishChild($newChild);
+        $this->finishChild($newChild);
 
         return $this;
     }
@@ -267,9 +267,9 @@ class Node extends Leaf implements NodeInterface
                 "Failed to insert after: Passed child is not a child of element to insert in"
             );
 
-        $this->_prepareChild($newChild);
+        $this->prepareChild($newChild);
         array_splice($this->children, $child->getIndex() + 1, 0, [$newChild]);
-        $this->_finishChild($newChild);
+        $this->finishChild($newChild);
 
         return $this;
     }

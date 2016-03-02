@@ -100,7 +100,7 @@ class Leaf implements LeafInterface
     {
 
         $idx = $this->getIndex();
-        if (!$idx) //Includes "not found" and "0", which means this is the first sibling
+        if ($idx === null || $idx === 0) //Includes "not found" and "0", which means this is the first sibling
             return null;
 
         return $this->parent->getChildAt($idx - 1);
@@ -113,7 +113,7 @@ class Leaf implements LeafInterface
     {
 
         $idx = $this->getIndex();
-        if ($idx === null || $idx >= count($this->getParent()) - 1)
+        if ($idx === null || $idx >= count($this->parent) - 1)
             return null;
 
         return $this->parent->getChildAt($idx + 1);
