@@ -40,9 +40,9 @@ class Node extends Leaf implements NodeInterface
     {
         parent::__clone();
 
-        foreach ($this->children as $child)
-            //clone $child will remove the parent and this clear the children
-            //We re-append them directly
+        $children = $this->children;
+        $this->children = [];
+        foreach ($children as $child)
             $this->appendChild(clone $child);
     }
 
@@ -281,7 +281,7 @@ class Node extends Leaf implements NodeInterface
      *
      * @return \Generator
      */
-    public function findChildren($callback, $depth = null, $level = null)
+    public function findChildren(callable $callback, $depth = null, $level = null)
     {
 
         $level = $level ?: 0;
@@ -308,7 +308,7 @@ class Node extends Leaf implements NodeInterface
      *
      * @return LeafInterface[]
      */
-    public function findChildrenArray($callback, $depth = null, $level = null)
+    public function findChildrenArray(callable $callback, $depth = null, $level = null)
     {
 
         return iterator_to_array($this->findChildren($callback, $depth, $level));
@@ -320,7 +320,7 @@ class Node extends Leaf implements NodeInterface
      *
      * @return \Generator
      */
-    public function find($callback, $depth = null)
+    public function find(callable $callback, $depth = null)
     {
 
         if ($this->is($callback))
@@ -336,7 +336,7 @@ class Node extends Leaf implements NodeInterface
      *
      * @return LeafInterface[]
      */
-    public function findArray($callback, $depth = null)
+    public function findArray(callable $callback, $depth = null)
     {
 
         return iterator_to_array($this->find($callback, $depth));

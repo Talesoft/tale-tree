@@ -115,7 +115,7 @@ interface NodeInterface extends LeafInterface, \IteratorAggregate, \Countable, \
      *
      * @return \Generator
      */
-    public function findChildren($callback, $depth = null, $level = null);
+    public function findChildren(callable $callback, $depth = null, $level = null);
 
     /**
      * @param callable $callback
@@ -124,7 +124,7 @@ interface NodeInterface extends LeafInterface, \IteratorAggregate, \Countable, \
      *
      * @return LeafInterface[]
      */
-    public function findChildrenArray($callback, $depth = null, $level = null);
+    public function findChildrenArray(callable $callback, $depth = null, $level = null);
 
     /**
      * @param callable $callback
@@ -132,7 +132,7 @@ interface NodeInterface extends LeafInterface, \IteratorAggregate, \Countable, \
      *
      * @return \Generator
      */
-    public function find($callback, $depth = null);
+    public function find(callable $callback, $depth = null);
 
     /**
      * @param callable $callback
@@ -140,5 +140,5 @@ interface NodeInterface extends LeafInterface, \IteratorAggregate, \Countable, \
      *
      * @return LeafInterface[]
      */
-    public function findArray($callback, $depth = null);
+    public function findArray(callable $callback, $depth = null);
 }

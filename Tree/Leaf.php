@@ -160,7 +160,7 @@ class Leaf implements LeafInterface
      *
      * @return bool
      */
-    public function is($callback)
+    public function is(callable $callback)
     {
 
         if (!is_callable($callback))
@@ -168,7 +168,7 @@ class Leaf implements LeafInterface
                 "Argument 1 passed to Leaf->is is not a valid callback"
             );
 
-        return call_user_func($callback, $this) === true;
+        return $callback($this) === true;
     }
 
     /**

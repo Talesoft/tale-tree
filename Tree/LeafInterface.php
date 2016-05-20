@@ -4,6 +4,7 @@ namespace Tale\Tree;
 
 /**
  * Interface LeafInterface
+ *
  * @package Tale\Tree
  */
 interface LeafInterface
@@ -65,7 +66,7 @@ interface LeafInterface
      *
      * @return bool
      */
-    public function is($callback);
+    public function is(callable $callback);
 
     /**
      * @param $className
